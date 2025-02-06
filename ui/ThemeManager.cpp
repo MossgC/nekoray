@@ -78,6 +78,8 @@ void ThemeManager::ApplyTheme(const QString &theme) {
         }
 
         current_theme = theme;
+
+        emit themeChanged(theme);
     };
     internal();
 
