@@ -21,6 +21,7 @@
 #include "3rdparty/qrcodegen.hpp"
 #include "3rdparty/VT100Parser.hpp"
 #include "3rdparty/qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
+#include "3rdparty/qv2ray/v2/ui/LogHighlighter.hpp"
 
 #ifndef NKR_NO_ZXING
 #include "3rdparty/ZxingQtReader.hpp"
@@ -107,11 +108,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Setup log UI
     ui->splitter->restoreState(DecodeB64IfValid(NekoGui::dataStore->splitter_state));
-    if (NekoGui::dataStore->theme.toLower() == "flatgray" || NekoGui::dataStore->theme.toLower() == "lightblue" || NekoGui::dataStore->theme.toLower() == "windowsvista" || NekoGui::dataStore->theme.toLower() == "windows") {
+    if (NekoGui::dataStore->theme.toInt() == 1 || NekoGui::dataStore->theme.toInt() == 2 || NekoGui::dataStore->theme.toInt() == 5 || NekoGui::dataStore->theme.toInt() == 6) {
         new SyntaxHighlighter(false, qvLogDocument);
     } else {
-        new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark || NekoGui::dataStore->theme.toLower() == "blacksoft" || NekoGui::dataStore->theme.toLower() == "fusion", qvLogDocument);
-    }
+        new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark || NekoGui::dataStore->theme.toInt() == 3 || NekoGui::dataStore->theme.toInt() == 7, qvLogDocument);
+    };
     qvLogDocument->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setDocument(qvLogDocument);
@@ -128,10 +129,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         themeManager->ApplyTheme(NekoGui::dataStore->theme, true);
     });
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
-        if (theme.toLower().contains("flatgray") || theme.toLower().contains("lightblue") || theme.toLower().contains("windowsvista") || theme.toLower().contains("windows")) {
+        if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
             // light themes
             new SyntaxHighlighter(false, qvLogDocument);
-        } else if (theme.toLower().contains("blacksoft") || theme.toLower().contains("fusion")) {
+        } else if (theme.toInt() == 3 || theme.toInt() == 7) {
             // dark themes
             new SyntaxHighlighter(true, qvLogDocument);
         } else {
