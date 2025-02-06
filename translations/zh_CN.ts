@@ -477,7 +477,7 @@
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation>分组</translation>
+        <translation>分组设置</translation>
     </message>
     <message>
         <source>New group</source>
@@ -1128,7 +1128,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Groups</source>
-        <translation>分组</translation>
+        <translation>分组设置</translation>
     </message>
     <message>
         <source>Stop</source>
