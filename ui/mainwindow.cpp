@@ -108,12 +108,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Setup log UI
     ui->splitter->restoreState(DecodeB64IfValid(NekoGui::dataStore->splitter_state));
-    // new SyntaxHighlighter(false, qvLogDocument);
-    // if (NekoGui::dataStore->theme.toInt() == 1 || NekoGui::dataStore->theme.toInt() == 2 || NekoGui::dataStore->theme.toInt() == 5 || NekoGui::dataStore->theme.toInt() == 6) {
-    //     new SyntaxHighlighter(false, qvLogDocument);
-    // } else {
-    //     new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark || NekoGui::dataStore->theme.toInt() == 3 || NekoGui::dataStore->theme.toInt() == 7, qvLogDocument);
-    // };
     if (NekoGui::dataStore->theme.toInt() == 1 || NekoGui::dataStore->theme.toInt() == 2 || NekoGui::dataStore->theme.toInt() == 5 || NekoGui::dataStore->theme.toInt() == 6) {
         new SyntaxHighlighter(false, qvLogDocument);
     } else {
@@ -130,31 +124,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->masterLogBrowser->setFont(font);
         qvLogDocument->setDefaultFont(font);
     }
-    // connect(qApp->styleHints(), &QStyleHints::colorSchemeChanged, this, [=](const Qt::ColorScheme& scheme) {
-    //     new SyntaxHighlighter(scheme == Qt::ColorScheme::Dark, qvLogDocument);
-    //     themeManager->ApplyTheme(NekoGui::dataStore->theme, true);
-    // });
-    // connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
-    //     if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
-    //         // light themes
-    //         new SyntaxHighlighter(false, qvLogDocument);
-    //     } else if (theme.toInt() == 3 || theme.toInt() == 7) {
-    //         // dark themes
-    //         new SyntaxHighlighter(true, qvLogDocument);
-    //     } else {
-    //         // bi-mode themes, follow system preference
-    //         new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark, qvLogDocument);
-    //     }
-    // });
-    // connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
-    //     if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
-    //         // light themes
-    //         new SyntaxHighlighter(false, qvLogDocument);
-    //     } else {
-    //         // bi-mode themes, follow system preference
-    //         new SyntaxHighlighter(true, qvLogDocument);
-    //     }
-    // });
     connect(ui->masterLogBrowser->verticalScrollBar(), &QSlider::valueChanged, this, [=](int value) {
         if (ui->masterLogBrowser->verticalScrollBar()->maximum() == value)
             qvLogAutoScoll = true;
