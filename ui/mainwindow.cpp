@@ -130,10 +130,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->masterLogBrowser->setFont(font);
         qvLogDocument->setDefaultFont(font);
     }
-    connect(qApp->styleHints(), &QStyleHints::colorSchemeChanged, this, [=](const Qt::ColorScheme& scheme) {
-        new SyntaxHighlighter(scheme == Qt::ColorScheme::Dark, qvLogDocument);
-        themeManager->ApplyTheme(NekoGui::dataStore->theme, true);
-    });
+    // connect(qApp->styleHints(), &QStyleHints::colorSchemeChanged, this, [=](const Qt::ColorScheme& scheme) {
+    //     new SyntaxHighlighter(scheme == Qt::ColorScheme::Dark, qvLogDocument);
+    //     themeManager->ApplyTheme(NekoGui::dataStore->theme, true);
+    // });
     // connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
     //     if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
     //         // light themes
