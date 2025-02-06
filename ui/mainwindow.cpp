@@ -107,6 +107,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Setup log UI
     ui->splitter->restoreState(DecodeB64IfValid(NekoGui::dataStore->splitter_state));
+    if (NekoGui::dataStore->theme.toLower() == "flatgray" || NekoGui::dataStore->theme.toLower() == "lightblue" || NekoGui::dataStore->theme.toLower() == "windowsvista" || NekoGui::dataStore->theme.toLower() == "windows") {
+        new SyntaxHighlighter(false, qvLogDocument);
+    } else {
+        new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark || NekoGui::dataStore->theme.toLower() == "blacksoft" || NekoGui::dataStore->theme.toLower() == "fusion", qvLogDocument);
+    }
     qvLogDocument->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setDocument(qvLogDocument);
@@ -118,6 +123,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->masterLogBrowser->setFont(font);
         qvLogDocument->setDefaultFont(font);
     }
+    connect(qApp->styleHints(), &QStyleHints::colorSchemeChanged, this, [=](const Qt::ColorScheme& scheme) {
+        new SyntaxHighlighter(scheme == Qt::ColorScheme::Dark, qvLogDocument);
+        themeManager->ApplyTheme(NekoGui::dataStore->theme, true);
+    });
+    connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
+        if (theme.toLower().contains("flatgray") || theme.toLower().contains("lightblue") || theme.toLower().contains("windowsvista") || theme.toLower().contains("windows")) {
+            // light themes
+            new SyntaxHighlighter(false, qvLogDocument);
+        } else if (theme.toLower().contains("blacksoft") || theme.toLower().contains("fusion")) {
+            // dark themes
+            new SyntaxHighlighter(true, qvLogDocument);
+        } else {
+            // bi-mode themes, follow system preference
+            new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark, qvLogDocument);
+        }
+    });
     connect(ui->masterLogBrowser->verticalScrollBar(), &QSlider::valueChanged, this, [=](int value) {
         if (ui->masterLogBrowser->verticalScrollBar()->maximum() == value)
             qvLogAutoScoll = true;
