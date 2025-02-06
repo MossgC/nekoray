@@ -146,15 +146,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //         new SyntaxHighlighter(qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark, qvLogDocument);
     //     }
     // });
-    connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
-        if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
-            // light themes
-            new SyntaxHighlighter(false, qvLogDocument);
-        } else {
-            // bi-mode themes, follow system preference
-            new SyntaxHighlighter(true, qvLogDocument);
-        }
-    });
+    // connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString& theme){
+    //     if (theme.toInt() == 1 || theme.toInt() == 2 || theme.toInt() == 5 || theme.toInt() == 6) {
+    //         // light themes
+    //         new SyntaxHighlighter(false, qvLogDocument);
+    //     } else {
+    //         // bi-mode themes, follow system preference
+    //         new SyntaxHighlighter(true, qvLogDocument);
+    //     }
+    // });
     connect(ui->masterLogBrowser->verticalScrollBar(), &QSlider::valueChanged, this, [=](int value) {
         if (ui->masterLogBrowser->verticalScrollBar()->maximum() == value)
             qvLogAutoScoll = true;
